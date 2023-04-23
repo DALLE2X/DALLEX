@@ -538,6 +538,7 @@ void destory_TableX(TableX *head)
                 free(temp);
                 temp = NULL;
             }
+	    free(record);
             temp1 = head;
             head = head->next;
             free(temp1);
