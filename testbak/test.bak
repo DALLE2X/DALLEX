@@ -1,0 +1,188 @@
+void testX(){
+	TableX* head=NULL;
+		create_TableX(&head);
+		log_info(log_level,"out %p",head);
+		if(!head){
+			log_warn(log_level,"create TableX failed");
+			return;
+		}
+		char *values[]={"aaa","bbb","ccc","ddd","eee","fff","aaa","bbb","ccc","ddd","eee","fff"};
+		int i;
+		unsigned long long	time,time1,counts=0;
+		unsigned long long	DALL=0,DALL1=0;
+		TableX* NextNode=NULL;
+		for(i=0;i<3;i++){
+			
+			RecordX* record=(RecordX*)malloc(sizeof(RecordX));
+			record->colValue=(char*)malloc(3);
+			memcpy(record->colName,"DALLE2",6);
+			memcpy(record->colValue,values[i],3);
+			time=tvusec();
+			add_record(head,record,&NextNode);
+			//free(record->colValue);
+			//free(record);
+			//free(NextNode);
+			DALL++;
+			if(time>999900){
+			usleep(1000);
+			//log_warn(log_level,"time:%ld,tps:%d",time,DALL-DALL1);
+			//DALL=0;
+			}
+			
+			//usleep(1000*100);
+		}
+		if(head){
+		while(head->node){
+			log_warn(log_level,"colName:%s",head->node->colValue);
+			head=head->next;
+			}
+		}
+}
+
+void testY(){
+	/*if(cJSON_HasObjectItem(json,"credits")){
+		cJSON *item=cJSON_GetObjectItem(json,"credits");
+		double  str=item->valuedouble;
+		ppMapx[CREDITS]->index=CREDITS;
+		memcpy(ppMapx[CREDITS]->name,&str,sizeof(str));
+		log_debug(log_level,"CREDITS:%d,%f",ppMapx[CREDITS]->index,*(double*)ppMapx[CREDITS]->name);
+		
+	}
+	
+	if(cJSON_HasObjectItem(json,"email")){
+		cJSON *item=cJSON_GetObjectItem(json,"email");
+		char  *str=item->valuestring;
+		ppMapx[EMAIL]->index=EMAIL;
+		memcpy(ppMapx[EMAIL]->name,str,strlen(str));
+		log_debug(log_level,"EMAIL:%d,%s",ppMapx[EMAIL]->index,ppMapx[EMAIL]->name);
+		
+	}
+	if(cJSON_HasObjectItem(json,"id")){
+		cJSON *item=cJSON_GetObjectItem(json,"id");
+		char  *str=item->valuestring;
+		ppMapx[USER_ID]->index=USER_ID;
+		memcpy(ppMapx[USER_ID]->name,str,strlen(str));
+		
+		log_debug(log_level,"USER_ID:%d,%s",ppMapx[USER_ID]->index,ppMapx[USER_ID]->name);
+	
+	}
+	if(cJSON_HasObjectItem(json,"organizations")){
+		
+		cJSON *item=cJSON_GetObjectItem(json,"organizations");
+		int array_size=1;
+		array_size=cJSON_GetArraySize(item);
+		log_debug(log_level,"array_size:%d",array_size);
+		int index;
+		cJSON * elem[1]={NULL};
+		for(index=0;index<array_size;index++){
+			
+			elem[index]=cJSON_GetArrayItem(item,index);
+
+		}
+		if(elem[0]){
+			if(cJSON_HasObjectItem(elem[0],"id")){
+			cJSON *item=cJSON_GetObjectItem(elem[0],"id");
+			char  *str=item->valuestring;
+			ppMapx[ORGANIZATIONS_ID]->index=ORGANIZATIONS_ID;
+			memcpy(ppMapx[ORGANIZATIONS_ID]->name,str,strlen(str));
+			
+			log_debug(log_level,"ORGANIZATIONS_ID:%d,%s",ppMapx[ORGANIZATIONS_ID]->index,ppMapx[ORGANIZATIONS_ID]->name);
+			
+			}
+			if(cJSON_HasObjectItem(elem[0],"is_default")){
+			cJSON *item=cJSON_GetObjectItem(elem[0],"is_default");
+			int  str=item->valueint;
+			ppMapx[IS_DEFAULT]->index=IS_DEFAULT;
+			memcpy(ppMapx[IS_DEFAULT]->name,&str,sizeof(str));
+			
+			log_debug(log_level,"IS_DEFAULT:%d,%d",ppMapx[IS_DEFAULT]->index,*(int*)ppMapx[IS_DEFAULT]->name);
+			
+			}
+			if(cJSON_HasObjectItem(elem[0],"name")){
+			cJSON *item=cJSON_GetObjectItem(elem[0],"name");
+			char  *str=item->valuestring;
+			ppMapx[ORGANIZATIONS_NAME]->index=ORGANIZATIONS_NAME;
+			memcpy(ppMapx[ORGANIZATIONS_NAME]->name,str,strlen(str));
+			
+			log_debug(log_level,"ORGANIZATIONS_NAME:%d,%s",ppMapx[ORGANIZATIONS_NAME]->index,ppMapx[ORGANIZATIONS_NAME]->name);
+			
+			}
+			if(cJSON_HasObjectItem(elem[0],"role")){
+			cJSON *item=cJSON_GetObjectItem(elem[0],"role");
+			char  *str=item->valuestring;
+			ppMapx[ROLE]->index=ROLE;
+			memcpy(ppMapx[ROLE]->name,str,strlen(str));
+			
+			log_debug(log_level,"ROLE:%d,%s",ppMapx[ROLE]->index,ppMapx[ROLE]->name);
+			
+			}
+		}
+	
+	}
+	if(cJSON_HasObjectItem(json,"profile_picture")){
+		cJSON *item=cJSON_GetObjectItem(json,"profile_picture");
+		char  *str=item->valuestring;
+		ppMapx[PROFILE_PICTURE]->index=PROFILE_PICTURE;
+		memcpy(ppMapx[PROFILE_PICTURE]->name,str,strlen(str));
+		
+		log_debug(log_level,"PROFILE_PICTURE:%d,%s",ppMapx[PROFILE_PICTURE]->index,ppMapx[PROFILE_PICTURE]->name);
+		
+	}*/
+	/*if(cJSON_IsArray(json)){
+		
+		int array_size;
+		array_size=cJSON_GetArraySize(json);
+
+		int index_table[]={DESCRIPTION_ENGINE,ID_ENGINE,NAME_ENGINE,TYPE_ENGINE};
+		const char *iname[]={"DESCRIPTION_ENGINE","ID_ENGINE","NAME_ENGINE","TYPE_ENGINE"};
+		const char *engines_name[]={"description","id","name","type"};
+		log_debug(log_level,"array_size:%d,itable:%d",array_size,sizeof(index_table)/sizeof(int));
+		int index,index2;;
+		cJSON *elem,*item;
+		int count=0;
+		for(index=0;index<array_size;index++){
+
+			elem=cJSON_GetArrayItem(json,index);
+			
+			for(index2=0;index2<sizeof(index_table)/sizeof(int);index2++){
+				item=cJSON_GetObjectItem(elem,engines_name[index2]);
+				char  *str=item->valuestring;
+				ppMapx[index_table[index2]]->index=index_table[index2];
+				memcpy(ppMapx[index_table[index2]]->name,str,strlen(str));
+				
+				log_debug(log_level,"No.%d->%s:%d,%s",count++%4+1,iname[index2],ppMapx[index_table[index2]]->index,ppMapx[index_table[index2]]->name);
+			}
+			
+			
+		}
+	}*/
+
+}
+int sqlite3T(){
+
+	sqlite3 *db;
+		int rc;
+		char *zErrMsg = 0;
+		
+		rc = sqlite3_open("dreamAi", &db);
+		if( rc ){
+		  fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+		  sqlite3_close(db);	  return(1);
+		}
+		char sql[]="create table engines_model(ID_INDEX INTEGER PRIMARY KEY AUTOINCREMENT,description text not null,id text not null UNIQUE,name text not null,type text not null);";
+		char sql1[]="create table account_info(ID_INDEX INTEGER PRIMARY KEY   AUTOINCREMENT,email text not null,user_id text not null UNIQUE,credits real not null default 0.0,organizations_id text not null,is_default integer not null,organizations_name text not null,role text not null,profile_picture text);";
+		rc=sqlite3_exec(db,sql,NULL,NULL, &zErrMsg);
+		
+		rc=sqlite3_exec(db,sql1,NULL,NULL, &zErrMsg);
+		if( rc!=SQLITE_OK ){
+		  log_err(log_level,"SQL error: %s",zErrMsg);
+		  //fprintf(stderr, "SQL error: %s\n", zErrMsg);
+		  sqlite3_free(zErrMsg);
+		}else{
+			log_debug(log_level,"create engines_model&account_info table succ!");
+		}
+		sqlite3_close(db);
+
+}
+
+
